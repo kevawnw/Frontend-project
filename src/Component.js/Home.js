@@ -1,8 +1,7 @@
 import React from 'react'
-import Categories from './Categories'
 import {useState, useEffect} from 'react'
 
-function Home() {
+function Home({wallet, budget}) {
   
 
   return (
@@ -11,14 +10,15 @@ function Home() {
     <div className='home'>
       <div>
         <p>user</p>
-        <p>graph</p>
+        <p>{budget}</p>
       </div>
       <div>
-        <p>
-          Walletssidebar
-        </p>
+        {wallet.map(wal => {
+          return <li key={wal.id}>{` $${wal.balance.toFixed(2)} - ${wal.category.name} `}</li>
+        })}
       </div>
     </div>
+    
     </>
   )
 }

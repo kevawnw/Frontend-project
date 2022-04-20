@@ -11,23 +11,47 @@ import {useState, useEffect} from 'react'
 
 function App() {
   const [trans, setTrans] = useState([])
+  const [wallet, setWallet] = useState([])
+  const [budget, setBudget] = useState(0)
+  const [users, setUsers] = useState([])
+  
+ console.log(wallet)
+ 
+  // trans has transaction and user
+  // wallet has wallet and category
   useEffect(()=> {
     fetch('http://localhost:9292/transactions')
     .then(res => res.json())
     .then(data => setTrans(data))
   },[])
 
-  
+  useEffect(()=> {
+    fetch('http://localhost:9292/wallet')
+    .then(res => res.json())
+    .then(data => setWallet(data))
+  },[])
+
+  useEffect(()=> {
+    fetch('http://localhost:9292/main-budget')
+    .then(res => res.json())
+    .then(data => setBudget(data))
+  },[])
+
+  useEffect(()=> {
+    fetch('http://localhost:9292/users')
+    .then(res => res.json())
+    .then(data => setUsers(data))
+  },[])
 
   return (
   <div>
     <BrowserRouter>
         <Navbar/>
           <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home wallet={wallet} budget={budget}/>}/>
             <Route path="/Categories" element={<Categories />}/>
             <Route path="/Transaction" element={<Transaction trans={trans}/>}/>
-            <Route path="/Wallet" element={<Wallet/>}/>
+            <Route path="/Wallet" element={<Wallet users={users} setWallet={setWallet} wallet={wallet}/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
     </BrowserRouter>
