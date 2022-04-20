@@ -1,7 +1,7 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-function Wallet({users, setWallet,wallet}) {
+function Wallet({users, setWallet,wallet, budget, setBudget}) {
 
 
   function makewallet(e){
@@ -15,15 +15,28 @@ function Wallet({users, setWallet,wallet}) {
       body: JSON.stringify(createwallet) 
     })
     .then(res => res.json())
-    .then(data => console.log(data))    }
+    .then(data => setWallet([...wallet, data]))
+    fetch('http://localhost:9292/main-budget')
+    .then(res => res.json())
+    .then(data => setBudget(data))
+
+  }
 
 
 
 
 
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
+
+  useEffect(()=> {
+    if(users.length !== 0){
+      setCreatewallet({...createwallet, user_id: users[0].id})
+    }
+  },[users])
+
   return (
     <div>
+      <div><h1>Main budget balance - {budget} </h1></div>
       <div><h1>Create a Wallet</h1></div>
       <form onSubmit={makewallet}>
         <label for="Create-new-wallet">Amount</label><br/>

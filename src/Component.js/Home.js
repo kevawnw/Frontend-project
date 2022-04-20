@@ -10,7 +10,7 @@ function Home({wallet, budget}) {
     <div className='home'>
       <div>
         <p>user</p>
-        <p>{budget}</p>
+        <p><h1> {budget} </h1></p>
       </div>
       <div>
         {wallet.map(wal => {

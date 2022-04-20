@@ -5,6 +5,17 @@ function Transaction({trans}) {
   
   return (
     <div>
+      <div><h1>Make Purchases</h1></div>
+
+      <form>
+        <label>Transaction Description</label><br/>
+        <input type='text'/><br/>
+        <label>Cost of purchase</label><br/>
+        <input type='number'/><br/>
+        <select></select>
+      </form>
+
+
       <div> <h1>Transaction History</h1></div>
       <table>
   <tr>
