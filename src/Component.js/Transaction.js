@@ -2,9 +2,18 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 
 
-function Transaction({trans, wallet, setTrans, setWallet}) {
+
+function Transaction({trans, wallet, setTrans, setWallet, handleDeleteTransaction}) {
   const [newtrans, setNewtrans] = useState({description: "", amount: 0, date: Date.now(), wallet_id: null})
   console.log(wallet)
+
+  function handleDelete(id){
+    fetch(`http://localhost:9292/transactions/${id}`, {
+        method: "DELETE",
+      })
+        .then((r) => r.json())
+        .then((deletedTransaction) => handleDeleteTransaction(deletedTransaction));
+    }
 
   useEffect(()=> {
     if(wallet.length !== 0){
@@ -36,6 +45,10 @@ function Transaction({trans, wallet, setTrans, setWallet}) {
     })
     
   }
+
+
+
+
 
   
   
@@ -71,6 +84,7 @@ function Transaction({trans, wallet, setTrans, setWallet}) {
         <td> {tran.amount.toFixed(2)}</td>
         <td> {tran.date}</td>
         <td>{tran.user.name}</td>
+        <td><button onClick={() => handleDelete(tran.id)}>Delete</button></td>
         </tr>        
     })}
   
