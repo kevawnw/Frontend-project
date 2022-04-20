@@ -2,10 +2,15 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 
 function Wallet({users, setWallet,wallet, budget, setBudget}) {
+  const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
 
 
   function makewallet(e){
     e.preventDefault()
+    if (budget < createwallet.balance ) {
+      alert("You are over budget, add more money to your budget to continue")
+      return null
+    }
     fetch('http://localhost:9292/wallet',{
       method: 'POST',
       headers: {
@@ -16,17 +21,13 @@ function Wallet({users, setWallet,wallet, budget, setBudget}) {
     })
     .then(res => res.json())
     .then(data => setWallet([...wallet, data]))
-    fetch('http://localhost:9292/main-budget')
-    .then(res => res.json())
-    .then(data => setBudget(data))
-
+    .then(()=> {
+      fetch('http://localhost:9292/main-budget')
+      .then(res => res.json())
+      .then(data => setBudget(data))
+    })
   }
 
-
-
-
-
-  const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
 
   useEffect(()=> {
     if(users.length !== 0){
@@ -46,12 +47,12 @@ function Wallet({users, setWallet,wallet, budget, setBudget}) {
         <label>Category</label><br/>
         <input type='text' onChange={(e) => setCreatewallet({...createwallet, category: e.target.value})} value={createwallet.category}/><br/>
         <select onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>{users.map(user => {
-          return <option key= {user.id} value= {user.id}>{user.name}</option>
+          return <option key={user.id} value ={user.id}>{user.name}</option>
         })}</select>
         <input type = 'submit'/>
       </form>
 
-      <div><h1>Unassigned Wallets</h1></div>
+      
 
     </div>
   )

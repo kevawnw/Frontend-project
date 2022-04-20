@@ -14,8 +14,10 @@ function App() {
   const [wallet, setWallet] = useState([])
   const [budget, setBudget] = useState(0)
   const [users, setUsers] = useState([])
+
+  console.log(users)
   
-console.log(wallet)
+
  
   // trans has transaction and user
   // wallet has wallet and category
@@ -48,9 +50,9 @@ console.log(wallet)
     <BrowserRouter>
         <Navbar/>
           <Routes>
-            <Route path="/" element={<Home wallet={wallet} budget={budget}/>}/>
+            <Route path="/" element={<Home wallet={wallet} budget={budget} users={users} setUsers={setUsers}/>}/>
             <Route path="/Categories" element={<Categories />}/>
-            <Route path="/Transaction" element={<Transaction trans={trans}/>}/>
+            <Route path="/Transaction" element={<Transaction trans={trans} wallet={wallet} setTrans={setTrans} setWallet={setWallet}/>}/>
             <Route path="/Wallet" element={<Wallet users={users} setWallet={setWallet} wallet={wallet} budget={budget} setBudget={setBudget}/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
