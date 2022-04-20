@@ -1,7 +1,17 @@
 import React from 'react'
 
-function Transaction({trans}) {
+function Transaction({trans, handleDeleteTransaction}) {
   console.log(trans)
+
+function handleDelete(id){
+  fetch(`http://localhost:9292/transactions/${id}`, {
+      method: "DELETE",
+    })
+      .then((r) => r.json())
+      .then((deletedTransaction) => handleDeleteTransaction(deletedTransaction));
+  }
+  
+  
   
   return (
     <div>
@@ -31,6 +41,7 @@ function Transaction({trans}) {
         <td> {tran.amount.toFixed(2)}</td>
         <td> {tran.date}</td>
         <td>{tran.user.name}</td>
+        <td><button onClick={() => handleDelete(tran.id)}>Delete</button></td>
         </tr>        
     })}
   

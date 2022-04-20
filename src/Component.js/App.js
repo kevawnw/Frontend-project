@@ -2,7 +2,7 @@ import '../App.css';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import Home from './Home';
 import Wallet from './Wallet';
-import Categories from './Categories';
+import Budget from './Budget';
 import Transaction from './Transaction';
 import Navbar from './Navbar';
 import Error from './Error';
@@ -43,14 +43,21 @@ console.log(wallet)
     .then(data => setUsers(data))
   },[])
 
+  function handleDeleteTransaction(deletedTransaction) {
+    const newTransactionsArray = trans.filter(transaction => transaction.id != deletedTransaction.id)
+    setTrans(newTransactionsArray)
+  }
+
+ 
+
   return (
   <div>
     <BrowserRouter>
         <Navbar/>
           <Routes>
             <Route path="/" element={<Home wallet={wallet} budget={budget}/>}/>
-            <Route path="/Categories" element={<Categories />}/>
-            <Route path="/Transaction" element={<Transaction trans={trans}/>}/>
+            <Route path="/Budget" element={<Budget budget={budget} setBudget={setBudget} />}/>
+            <Route path="/Transaction" element={<Transaction trans={trans} handleDeleteTransaction={handleDeleteTransaction}/>}/>
             <Route path="/Wallet" element={<Wallet users={users} setWallet={setWallet} wallet={wallet} budget={budget} setBudget={setBudget}/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
