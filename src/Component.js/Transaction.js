@@ -89,7 +89,7 @@ function Transaction({trans, wallet, setTrans, setWallet, handleDeleteTransactio
     <th>Amount</th>
     <th>Date</th>
     <th>Person</th>
-    <th>Remove</th>
+    <th></th>
   </tr>
   
     {trans.map(tran => {

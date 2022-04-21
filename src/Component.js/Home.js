@@ -1,37 +1,25 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
+import { PieChart } from 'react-minimal-pie-chart'
 
 function Home({wallet, budget, users, setUsers}) {
-  const [newuser, setNewuser] = useState({name: ''})
-
-  function createusers(e){
-    e.preventDefault()
-    fetch('http://localhost:9292/users',{
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(newuser) 
-    })
-    .then(res => res.json())
-    .then(data => setUsers([...users, data]))
-   
-  }
   
-
+  
   return (
     <>
-      <div><h1 className='title'>Family $$$ Tracker</h1></div>
+      <div><h1 id='title'>Budget Tracker</h1></div>
     <div className='home'>
       <div>
         <p><h1> {budget} </h1></p>
-        <p></p>
-        <form onSubmit={createusers}>
-          <label>create user</label><br/>
-          <input type="text" onChange={(e)=> setNewuser({...newuser, name: e.target.value})}/>
-          <input type= 'submit'/>
-        </form>
+      </div>
+      <div>
+      <PieChart
+  data={[
+    { title: 'One', value: 10, color: '#E38627' },
+    { title: 'Two', value: 15, color: '#C13C37' },
+    { title: 'Three', value: 20, color: '#6A2135' },
+  ]}
+/>;
       </div>
       <div>
         {wallet.map(wal => {
