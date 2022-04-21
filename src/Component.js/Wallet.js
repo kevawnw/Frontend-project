@@ -2,7 +2,7 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import User from './User'
 
-function Wallet({users, setWallet, wallet, budget, setBudget}) {
+function Wallet({users, setWallet, wallet, budget, setBudget, setUsers}) {
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
 
 
@@ -26,6 +26,11 @@ function Wallet({users, setWallet, wallet, budget, setBudget}) {
       fetch('http://localhost:9292/main-budget')
       .then(res => res.json())
       .then(data => setBudget(data))
+        .then (()=>{
+          fetch('http://localhost:9292/users')
+      .then(res => res.json())
+      .then(data => setUsers(data))
+        })
     })
   }
 

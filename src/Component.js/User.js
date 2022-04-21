@@ -15,7 +15,7 @@ function User({name, wallets, user}) {
 
         
     <>
-        <div style={{width: '100vw', height: '100vh', position:"fixed", top: '0', left: '0', background: 'black'}}></div>
+        <div style={{width: '100vw', height: '100vh', position:"fixed", top: '0', left: '0', background: 'white'}}></div>
     <table className='modal '>
         <div>
             {/* <h1>{name}'s Wallets</h1> */}
