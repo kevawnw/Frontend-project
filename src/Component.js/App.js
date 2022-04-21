@@ -50,6 +50,8 @@ function App() {
     setTrans(newTransactionsArray)
   }
 
+  
+
  
 
   return (

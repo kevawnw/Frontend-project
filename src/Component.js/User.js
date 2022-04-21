@@ -3,6 +3,7 @@ import {useState} from 'react'
 
 function User({name, wallets, user}) {
     const [showwallets, setShowwallets] = useState(true)
+    console.log(wallets)
     
   return (
       <>
