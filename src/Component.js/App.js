@@ -56,7 +56,10 @@ function App() {
     
   }
 
- 
+  function handleDeleteWallet(deletedWallet) {
+    const newWalletArray = wallet.filter(wallet => wallet.id != deletedWallet.id)
+    setWallet(newWalletArray)
+  }
 
   return (
   <div>
@@ -66,7 +69,7 @@ function App() {
             <Route path="/" element={<Home wallet={wallet} budget={budget} users={users} setUsers={setUsers}/>}/>
             <Route path="/Transaction" element={<Transaction trans={trans} wallet={wallet} setTrans={setTrans} setWallet={setWallet} handleDeleteTransaction={handleDeleteTransaction}/>}/>
             <Route path="/Budget" element={<Budget budget={budget} wallet={wallet} setWallet={setWallet} handleUpdateUsers={handleUpdateUsers} setBudget={setBudget} users={users} setUsers={setUsers} />}/>
-            <Route path="/Wallet" element={<Wallet users={users} setUsers={setUsers} setWallet={setWallet} wallet={wallet} budget={budget} setBudget={setBudget}/>}/>
+            <Route path="/Wallet" element={<Wallet users={users} setUsers={setUsers} setWallet={setWallet} wallet={wallet} budget={budget} setBudget={setBudget} handleDeleteWallet={handleDeleteWallet}/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
     </BrowserRouter>

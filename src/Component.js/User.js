@@ -1,8 +1,21 @@
 import React from 'react'
 import {useState} from 'react'
 
-function User({name, wallets, user}) {
+function User({name, wallets, setUsers, handleDeleteWallet}) {
     const [showwallets, setShowwallets] = useState(true)
+
+    function handleWalletRemoval(id) {
+        fetch(`http://localhost:9292/wallets/${id}`, {
+        method: "DELETE",
+      })
+        .then((r) => r.json())
+        .then((deletedWallet) => handleDeleteWallet(deletedWallet))
+        .then (()=>{
+            fetch('http://localhost:9292/users')
+                .then(res => res.json())
+                .then(data => setUsers(data))
+        })
+    }
     
   return (
       <>
@@ -29,7 +42,7 @@ function User({name, wallets, user}) {
             <th onClick={()=> setShowwallets(prev => !prev)}>Exit</th>
         </tr>
         {wallets.map(wall => {
-            return <tr className="myrow">
+            return <tr key = {wall.id} className="myrow">
                         <td> <img id='wallet' src='https://cdn.vectorstock.com/i/1000x1000/59/25/cartoon-wallet-bill-money-cash-dollar-vector-12235925.webp'/> ${wall.balance.toFixed(2)}
                         </td> 
 
@@ -37,7 +50,7 @@ function User({name, wallets, user}) {
                         {wall.category.name}
                         </td>
                         <td>
-                            <button>Del</button>
+                            <button onClick={()=>handleWalletRemoval(wall.id)}>Del</button>
                         </td>
                      </tr>
         })}

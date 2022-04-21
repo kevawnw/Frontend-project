@@ -2,7 +2,7 @@ import React from 'react'
 import {useState, useEffect} from 'react'
 import User from './User'
 
-function Wallet({users, setWallet, wallet, budget, setBudget, setUsers}) {
+function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDeleteWallet}) {
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
 
 
@@ -61,7 +61,7 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers}) {
       <div>
         <ul>
           {users.map(user => {
-            return <User key={user.id} name={user.name} wallets={user.wallets} user={user}/>
+            return <User key={user.id} setUsers={setUsers} name={user.name} setWallet={setWallet} wallets={user.wallets} user={user} handleDeleteWallet={handleDeleteWallet}/>
           })}
         </ul>
       </div>
