@@ -5,9 +5,55 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('./images/background.jpg');
+  position: absolute;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+   
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav.nav-bar{
+  background: rgb(237, 250, 255);
+  text-align:  center;
+  width: 1500px
+  
+  
+}
+
+#homeLink{
+  margin: 0px, 0px, 0px, 0px
+  
+}
+
+#budgetLink{
+  margin: 0px, 0px, 0px, 0px
+}
+
+#transactionLink{
+  margin: 0px, 0px, 0px, 0px
+}
+
+#walletLink{
+  margin: 0px, 0px, 0px, 0px
+}
+
+#homeLink,
+#budgetLink,
+#transactionLink,
+ #walletLink{
+  text-decoration: none;
+}
+
+#title{
+  color: rgb(79, 81, 90);
+  text-align: center;
+}
+
+
