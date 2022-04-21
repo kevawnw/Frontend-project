@@ -1,7 +1,8 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
+import User from './User'
 
-function Wallet({users, setWallet,wallet, budget, setBudget}) {
+function Wallet({users, setWallet, wallet, budget, setBudget}) {
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
 
 
@@ -51,6 +52,14 @@ function Wallet({users, setWallet,wallet, budget, setBudget}) {
         })}</select>
         <input type = 'submit'/>
       </form>
+          <div><h1>All users</h1></div>
+      <div>
+        <ul>
+          {users.map(user => {
+            return <User key={user.id} name={user.name} wallets={user.wallets} user={user}/>
+          })}
+        </ul>
+      </div>
 
       
 

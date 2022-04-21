@@ -35,7 +35,7 @@ function Home({wallet, budget, users, setUsers}) {
       </div>
       <div>
         {wallet.map(wal => {
-          return <li key={wal.id}>{` $${wal.balance.toFixed(2)} - ${wal.category.name} owner `}</li>
+          return <li key={wal.id}>{` $${wal.balance.toFixed(2)} - ${wal.category.name} owner- ${wal.user.name} `}</li>
         })}
       </div>
     </div>

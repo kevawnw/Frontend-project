@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 
+
 function Budget({budget, setBudget}) {
 
   const [newBudget, setNewBudget] = useState(0)
@@ -36,6 +37,14 @@ function Budget({budget, setBudget}) {
       <input type='number' onChange={handleUpdateBudget}></input>
       <input type='submit' value='Update Budget'></input>
       </form>
+
+      <div><h1>All Users</h1></div>
+      {/* <div>
+        {users.map(user => {
+          return <User key={user.id} name={user.name} wallets={user.wallets} user={user}/>
+        })}
+
+      </div> */}
     </div>
   )
 }

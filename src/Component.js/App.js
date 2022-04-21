@@ -59,7 +59,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home wallet={wallet} budget={budget} users={users} setUsers={setUsers}/>}/>
             <Route path="/Transaction" element={<Transaction trans={trans} wallet={wallet} setTrans={setTrans} setWallet={setWallet} handleDeleteTransaction={handleDeleteTransaction}/>}/>
-            <Route path="/Budget" element={<Budget budget={budget} setBudget={setBudget} />}/>
+            <Route path="/Budget" element={<Budget budget={budget} setBudget={setBudget}/>}/>
             <Route path="/Wallet" element={<Wallet users={users} setWallet={setWallet} wallet={wallet} budget={budget} setBudget={setBudget}/>}/>
             <Route path="*" element={<Error/>}/>
           </Routes>
