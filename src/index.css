@@ -59,8 +59,20 @@ nav.nav-bar{
 }
 
 #title{
-  color: rgb(79, 81, 90);
+  color: rgb(0, 0, 0);
   text-align: center;
+  font-size: 36px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#cover-image{
+  align-content: center;
+  padding: 0;
+    display: block;
+    margin: 0 auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 #budget-button{
