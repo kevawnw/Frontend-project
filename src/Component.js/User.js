@@ -1,8 +1,10 @@
 import React from 'react'
 import {useState} from 'react'
 
-function User({name, wallets, setUsers, handleDeleteWallet}) {
+function User({name, wallets, setUsers, handleDeleteWallet, setTrans, setBudget}) {
     const [showwallets, setShowwallets] = useState(true)
+
+    console.log(wallets)
 
     function handleWalletRemoval(id) {
         fetch(`http://localhost:9292/wallets/${id}`, {
@@ -14,6 +16,16 @@ function User({name, wallets, setUsers, handleDeleteWallet}) {
             fetch('http://localhost:9292/users')
                 .then(res => res.json())
                 .then(data => setUsers(data))
+                .then(()=> {
+                    fetch('http://localhost:9292/transactions')
+                    .then(res => res.json())
+                    .then(data => setTrans(data))
+                    .then(()=> {
+                        fetch('http://localhost:9292/main-budget')
+                        .then(res => res.json())
+                        .then(data => setBudget(data))
+                    })
+                })
         })
     }
     
@@ -35,11 +47,11 @@ function User({name, wallets, setUsers, handleDeleteWallet}) {
             {/* <button> x</button> */}
 
         </div>
-    
-        <tr>
+        <div><h1>{name}'s Wallets</h1></div>
+        {wallets.length !== 0?   ( <> <tr>
             <th><h3>Balance</h3></th>
             <th>Category</th>
-            <th onClick={()=> setShowwallets(prev => !prev)}>Exit</th>
+            <th onClick={()=> setShowwallets(prev => !prev)}><button>exit</button></th>
         </tr>
         {wallets.map(wall => {
             return <tr key = {wall.id} className="myrow">
@@ -53,7 +65,8 @@ function User({name, wallets, setUsers, handleDeleteWallet}) {
                             <button onClick={()=>handleWalletRemoval(wall.id)}>Del</button>
                         </td>
                      </tr>
-        })}
+        })} </>)  :  <p>You have no wallets <button onClick={()=> setShowwallets(prev => !prev)} >exit</button></p>   }
+        
     </table>
     </>
         }

@@ -1,11 +1,12 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 
-function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, setWallet}) {
+function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, setWallet, setTrans}) {
 
   const [newBudget, setNewBudget] = useState(0)
   const [newuser, setNewuser] = useState({name: ''})
   const [deleteUser, setDeleteUser] = useState("")
+  console.log("user",users)
   
   
   function createusers(e){
@@ -33,6 +34,16 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
             fetch('http://localhost:9292/wallet')
               .then(res => res.json())
               .then(data => setWallet(data))
+              .then(() => {
+                fetch('http://localhost:9292/main-budget')
+                .then(res => res.json())
+                .then(data => setBudget(data))
+                .then(()=> {
+                  fetch('http://localhost:9292/transactions')
+                  .then(res => res.json())
+                  .then(data => setTrans(data))
+                })
+              })
         })
        
   }
@@ -79,17 +90,18 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
   <table>
   <tr>
     <th>User Name</th>
-    <th>User ID</th>
-    <th>Total Contribution</th>
+    <th># of wallets</th>
+    <th>Total Wallets Amount</th>
     <th>Contribution %</th>
+    <th>Remove Users</th>
   </tr>
   
     {users.map(user => {
       return <tr key={user.id}>
         <td> {user.name}</td>
-        <td> {user.id}</td>
-        <td>{wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0)}</td>
-        <td>{`${wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0)}`/`${wallet.reduce((total, object) => object.balance + total, 0)}`*100}</td>
+        <td> {user.wallets.length} </td>
+        <td>{wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0).toFixed(2)}</td>
+        <td>{`${wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0)}`/`${wallet.reduce((total, object) => object.balance + total, 0).toFixed(2)}`*100}</td>
         <td><button onClick={() => handleDeleteUser(user.id)}>Delete</button></td>
         </tr>        
     })}
