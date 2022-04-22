@@ -15,12 +15,16 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
 
 
-function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDeleteWallet}) {
+function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDeleteWallet, setTrans}) {
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
+  console.log(users)
 
 
   function makewallet(e){
     e.preventDefault()
+    if(!createwallet.user_id){
+      return null
+    }
     if (budget < createwallet.balance ) {
       alert("You are over budget, add more money to your budget to continue")
       return null
@@ -43,6 +47,7 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
           fetch('http://localhost:9292/users')
       .then(res => res.json())
       .then(data => setUsers(data))
+      .then(setCreatewallet({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 }))
         })
     })
   }
@@ -58,10 +63,21 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
     
     
     <div>
+
       <div><h1 id='wallet-title'><u>Current Budget</u>: ${budget.toLocaleString("en-US")}</h1></div>
-      <div><h2 id='new-wallet-title'><u>Create New Wallet</u>:</h2></div>
-      <form>
-      <select id="wallet-user-select"onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>{users.map(user => {
+       <div><h2 id='new-wallet-title'><u>Create New Wallet</u>:</h2></div>
+      <form onSubmit={makewallet}>
+        <label for="Create-new-wallet">Amount</label><br/>
+        <input type='number'  onChange={(e)=> setCreatewallet({...createwallet, balance: e.target.value })} value={createwallet.balance}/><br/>
+        <label hidden>Date</label>
+        <input value={Date.now()} hidden/>
+        <label>Category</label><br/>
+        <input type='text' onChange={(e) => setCreatewallet({...createwallet, category: e.target.value})} value={createwallet.category}/><br/>
+        <select id="wallet-user-select" onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>
+          {users.map(user => {
+
+
+
           return <option key={user.id} value ={user.id}>{user.name}</option>
         })}</select>
         <br/>
@@ -78,7 +94,7 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
       <div>
         <ul id='user-details-list'>
           {users.map(user => {
-            return <User key={user.id} setUsers={setUsers} name={user.name} setWallet={setWallet} wallets={user.wallets} user={user} handleDeleteWallet={handleDeleteWallet}/>
+            return <User key={user.id} setBudget={setBudget} setTrans={setTrans} setUsers={setUsers} name={user.name} setWallet={setWallet} wallets={user.wallets} user={user} handleDeleteWallet={handleDeleteWallet}/>
           })}
         </ul>
       </div>

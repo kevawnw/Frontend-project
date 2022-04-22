@@ -10,8 +10,12 @@ function Home({wallet, budget, users, setUsers}) {
       <div><h1 id='title'>Budget Tracker</h1></div>
     <div className='home'>
       <div>
-        <p><h1> {budget} </h1></p>
+        <p><h1> ${budget} </h1></p>
       </div>
+
+    
+      
+
       <div>
       <PieChart
   data={[
@@ -22,6 +26,7 @@ function Home({wallet, budget, users, setUsers}) {
 />;
       </div>
      
+
     </div>
     
     </>
