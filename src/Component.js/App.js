@@ -7,6 +7,10 @@ import Transaction from './Transaction';
 import Navbar from './Navbar';
 import Error from './Error';
 import {useState, useEffect} from 'react'
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 
 function App() {
@@ -62,6 +66,9 @@ function App() {
 
   return (
   <div>
+    <CssBaseline />
+      <Container fixed>
+        <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}> 
     <BrowserRouter>
         <Navbar/>
           <Routes>
@@ -72,8 +79,11 @@ function App() {
             <Route path="*" element={<Error/>}/>
           </Routes>
     </BrowserRouter>
-    
+    </Box>
+    </Container>
+
   </div>
+
   )
 }
 

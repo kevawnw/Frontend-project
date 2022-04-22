@@ -1,6 +1,19 @@
-import React from 'react'
 import {useState, useEffect} from 'react'
 import User from './User'
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField';
+
 
 function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDeleteWallet, setTrans}) {
   const [createwallet, setCreatewallet] = useState({balance: 0, date: Date.now(), user_id: null, category: "", main_budget_id: 1 })
@@ -47,9 +60,12 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
   },[users])
 
   return (
+    
+    
     <div>
-      <div><h1>Main budget balance - ${budget} </h1></div>
-      <div><h1>Create a Wallet</h1></div>
+
+      <div><h1 id='wallet-title'><u>Current Budget</u>: ${budget.toLocaleString("en-US")}</h1></div>
+       <div><h2 id='new-wallet-title'><u>Create New Wallet</u>:</h2></div>
       <form onSubmit={makewallet}>
         <label for="Create-new-wallet">Amount</label><br/>
         <input type='number'  onChange={(e)=> setCreatewallet({...createwallet, balance: e.target.value })} value={createwallet.balance}/><br/>
@@ -57,15 +73,26 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
         <input value={Date.now()} hidden/>
         <label>Category</label><br/>
         <input type='text' onChange={(e) => setCreatewallet({...createwallet, category: e.target.value})} value={createwallet.category}/><br/>
-        <select onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>
+        <select id="wallet-user-select" onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>
           {users.map(user => {
+
+
+
           return <option key={user.id} value ={user.id}>{user.name}</option>
         })}</select>
-        <input type = 'submit'/>
+        <br/>
+        <TextField id="new-wallet-amt-field" label="Amount" defaultValue="" variant="filled" size="small"  type='number'  onChange={(e)=> setCreatewallet({...createwallet, balance: e.target.value })}/><br/>
+        <label hidden>Date</label>
+        <input value={Date.now()} hidden/>
+        
+        <TextField id="new-wallet-cat-field" label="Category" defaultValue="" variant="filled" size="small"  type='text' onChange={(e) => setCreatewallet({...createwallet, category: e.target.value})} value={createwallet.category}/><br/>
+        
+        <br/>
+        <Button id="new-wallet-button" size="small" variant="contained" onClick={makewallet}>Submit</Button>
       </form>
-          <div><h1>All users</h1></div>
+          <div><h2 id='wallet-details-title'><u>Wallet Details</u>:</h2></div>
       <div>
-        <ul>
+        <ul id='user-details-list'>
           {users.map(user => {
             return <User key={user.id} setBudget={setBudget} setTrans={setTrans} setUsers={setUsers} name={user.name} setWallet={setWallet} wallets={user.wallets} user={user} handleDeleteWallet={handleDeleteWallet}/>
           })}
@@ -75,6 +102,7 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
       
 
     </div>
+
   )
 }
 

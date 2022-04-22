@@ -1,5 +1,14 @@
-import React from 'react'
+
 import {useState, useEffect} from 'react'
+import Button from '@mui/material/Button'
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+
+
 
 function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, setWallet, setTrans}) {
 
@@ -21,6 +30,7 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
     })
     .then(res => res.json())
     .then(data => setUsers([...users, data]))
+    document.getElementById('user-form').reset();
    
   }
 
@@ -69,25 +79,30 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
           .then(res => res.json())
           .then(newBudget => setBudget(newBudget)) 
       });
+      document.getElementById('budget-form').reset();
+      
   }
 
   
 
   return (
+    <>
+    
     <div className='container'>
-      <div className='top'><h1>Monthly Budget: ${budget}</h1></div>
-      <form onSubmit={handleSubmitBudget}>
-      <input type='number' onChange={handleUpdateBudget}></input>
-      <input type='submit' value='Update Budget'></input>
+      <div id="budget-title" className='top'><h1 id='budget-title-h1'><u>Current Budget</u>: ${budget.toLocaleString("en-US")}</h1></div>
+      <form id="budget-form">
+        <label id="new-budget-label">Adjust Budget:</label><br/>
+      <TextField id="budget-field" label="New Budget Amt" defaultValue="" variant="filled" size="small" onChange={handleUpdateBudget}/>
+      <Button id="budget-button" size="small" variant="contained" onClick={handleSubmitBudget}>Submit</Button>
       </form>
-      <form onSubmit={createusers}>
-          <label>create user</label><br/>
-          <input type="text" onChange={(e)=> setNewuser({...newuser, name: e.target.value})}/>
-          <input type= 'submit'/>
+      <form id="user-form">
+          <label id="user-form-label">Create New User:</label><br/>
+          <TextField id="budget-field" label="User Name" defaultValue="" variant="filled" size="small"  onChange={(e)=> setNewuser({...newuser, name: e.target.value})}/>
+          <Button id="user-button" size="small" variant="contained" onClick={createusers}>Submit</Button>
         </form><br/>
-        <div> <h1>Users</h1></div>
+        <div> <h1><u>Current Users:</u></h1></div>
       
-  <table>
+  <table id="users-table">
   <tr>
     <th>User Name</th>
     <th># of wallets</th>
@@ -99,10 +114,14 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
     {users.map(user => {
       return <tr key={user.id}>
         <td> {user.name}</td>
+
         <td> {user.wallets.length} </td>
         <td>{wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0).toFixed(2)}</td>
         <td>{`${wallet.filter(wal => wal.user_id == user.id).reduce((total, object) => object.balance + total, 0)}`/`${wallet.reduce((total, object) => object.balance + total, 0).toFixed(2)}`*100}</td>
-        <td><button onClick={() => handleDeleteUser(user.id)}>Delete</button></td>
+       
+        
+        <td id='delete-user-button-row'><Button size="small" id='user-delete-button' variant="contained" onClick={() => handleDeleteUser(user.id)}>Delete</Button></td>
+
         </tr>        
     })}
       
@@ -110,7 +129,8 @@ function Budget({budget, wallet, setBudget, users, setUsers, handleUpdateUsers, 
 </table>
     {console.log('wallet',wallet)}
     </div>
-  )
+    
+  </>)
 }
 
 export default Budget

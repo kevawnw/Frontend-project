@@ -1,5 +1,15 @@
-import React from 'react'
 import {useState, useEffect} from 'react'
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField';
+
 
 
 
@@ -74,35 +84,49 @@ const lastModified = new Date().toLocaleDateString("en-US",{
   
   return (
     <div>
-      <div><h1>Make Purchases</h1></div>
+
+      
 
       {/* something is freaking out in the backend.  */}
+  <div><h1 id='new-trans-title'><u>Create New Expense</u>:</h1></div>
 
       <form onSubmit={createtrans}>
         <label>Transaction Description</label><br/>
 
         <input type='text' onChange={(e)=> setNewtrans({...newtrans, description: e.target.value})} value={newtrans.description}/><br/>
 
-        <label>Cost of purchase</label><br/>
+        
 
         <input type='number' step="any" onChange={(e)=> setNewtrans({...newtrans, amount: parseFloat(e.target.value)})} value={newtrans.amount}/><br/>
 
         <label>Wallet</label><br/>
 
-        {/* <select onChange={(e)=> setNewtrans({...newtrans, wallet_id: e.target.value})}  > */}
+        {/* <select id='new-trans-select' onChange={(e)=> setNewtrans({...newtrans, wallet_id: e.target.value})}  > */}
         <select onChange={dropdownvalue} >
 
           {wallet.map(wall => {
           return <option  key={wall.id} value={wall.id} data-Amount = {wall.balance.toFixed(2)}>{`$${wall.balance.toFixed(2)} ${wall.category.name}  ${wall.user.name}`}</option>
+
+      
+
+      
+      
         })} 
         
         </select><br/>
+        
+        <TextField id="budget-field" label="Description" defaultValue="" variant="filled" size="small"  onChange={(e)=> setNewtrans({...newtrans, description: e.target.value})} value={newtrans.description}/><br/>
+        
+       
+        
+        <TextField id="budget-field" label="Cost:" defaultValue="$" variant="filled" size="small" onChange={(e)=> setNewtrans({...newtrans, amount: e.target.value})} value={newtrans.amount}/><br/>
 
-        <input type = 'submit'/>
+        <Button id="new-trans-button" size="small" variant="contained" onClick={createtrans}>Submit</Button>
       </form>
+      <br/>
+      <br/>
 
-
-      <div> <h1>Transaction History</h1></div>
+      <div> <h1><u>Expense History</u>:</h1></div>
       <table>
   <tr>
     <th>Description</th>
@@ -118,7 +142,7 @@ const lastModified = new Date().toLocaleDateString("en-US",{
         <td> {tran.amount.toFixed(2)}</td>
         <td> {tran.date}</td>
         <td>{tran.user.name}</td>
-        <td><button onClick={() => handleDelete(tran.id)}>Delete</button></td>
+        <td><Button id="delete-trans-button" size="small" variant="contained" onClick={() => handleDelete(tran.id)}>Delete</Button></td>
         </tr>        
     })}
   

@@ -1,5 +1,13 @@
-import React from 'react'
+
 import {useState} from 'react'
+import Button from '@mui/material/Button'
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+
 
 function User({name, wallets, setUsers, handleDeleteWallet, setTrans, setBudget}) {
     const [showwallets, setShowwallets] = useState(true)
@@ -33,8 +41,8 @@ function User({name, wallets, setUsers, handleDeleteWallet, setTrans, setBudget}
       <>
       { 
         showwallets ?
-    <div>
-        <button className='' onClick={()=> setShowwallets(prev => !prev)}>{name}</button>
+    <div id='wallet-details-div'>
+        <Button id="wallet-details-button" color="success" size="small" variant="contained"  onClick={()=> setShowwallets(prev => !prev)}>{name}</Button>
     </div>
     :
 
@@ -62,7 +70,7 @@ function User({name, wallets, setUsers, handleDeleteWallet, setTrans, setBudget}
                         {wall.category.name}
                         </td>
                         <td>
-                            <button onClick={()=>handleWalletRemoval(wall.id)}>Del</button>
+                            <Button id="wallet-delete-button" size="small" variant="contained"   onClick={()=>handleWalletRemoval(wall.id)}>Delete</Button>
                         </td>
                      </tr>
         })} </>)  :  <p>You have no wallets <button onClick={()=> setShowwallets(prev => !prev)} >exit</button></p>   }
