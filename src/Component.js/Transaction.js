@@ -90,22 +90,13 @@ const lastModified = new Date().toLocaleDateString("en-US",{
       {/* something is freaking out in the backend.  */}
   <div><h1 id='new-trans-title'><u>Create New Expense</u>:</h1></div>
 
-      <form onSubmit={createtrans}>
-        <label>Transaction Description</label><br/>
-
-        <input type='text' onChange={(e)=> setNewtrans({...newtrans, description: e.target.value})} value={newtrans.description}/><br/>
-
-        
-
-        <input type='number' step="any" onChange={(e)=> setNewtrans({...newtrans, amount: parseFloat(e.target.value)})} value={newtrans.amount}/><br/>
-
-        <label>Wallet</label><br/>
+      <form>
 
         {/* <select id='new-trans-select' onChange={(e)=> setNewtrans({...newtrans, wallet_id: e.target.value})}  > */}
         <select onChange={dropdownvalue} >
 
           {wallet.map(wall => {
-          return <option  key={wall.id} value={wall.id} data-Amount = {wall.balance.toFixed(2)}>{`$${wall.balance.toFixed(2)} ${wall.category.name}  ${wall.user.name}`}</option>
+          return <option  key={wall.id} value={wall.id} data-Amount = {wall.balance.toFixed(2)}>{`${wall.user.name}: ${wall.category.name} - $${wall.balance.toFixed(2)}`}</option>
 
       
 

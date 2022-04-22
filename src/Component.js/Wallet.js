@@ -66,13 +66,8 @@ function Wallet({users, setWallet, wallet, budget, setBudget, setUsers, handleDe
 
       <div><h1 id='wallet-title'><u>Current Budget</u>: ${budget.toLocaleString("en-US")}</h1></div>
        <div><h2 id='new-wallet-title'><u>Create New Wallet</u>:</h2></div>
-      <form onSubmit={makewallet}>
-        <label for="Create-new-wallet">Amount</label><br/>
-        <input type='number'  onChange={(e)=> setCreatewallet({...createwallet, balance: e.target.value })} value={createwallet.balance}/><br/>
-        <label hidden>Date</label>
-        <input value={Date.now()} hidden/>
-        <label>Category</label><br/>
-        <input type='text' onChange={(e) => setCreatewallet({...createwallet, category: e.target.value})} value={createwallet.category}/><br/>
+      <form>
+      
         <select id="wallet-user-select" onChange={(e)=> setCreatewallet({...createwallet, user_id: e.target.value})}>
           {users.map(user => {
 
